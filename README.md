@@ -2,7 +2,7 @@
 
 <img alt="Linux" src="kokoro/img/linux.png" width="20px" height="20px" hspace="2px"/>![Linux Build Status](https://storage.googleapis.com/shaderc/badges/build_status_linux_release.svg)
 <img alt="MacOS" src="kokoro/img/macos.png" width="20px" height="20px" hspace="2px"/>![MacOS Build Status](https://storage.googleapis.com/shaderc/badges/build_status_macos_release.svg)
-<img alt="Windows" src="kokoro/img/windows.png" width="20px" height="20px" hspace="2px"/>![Windows Build Status](https://storage.googleapis.com/shaderc/badges/build_status_windows_release.svg)
+[![Build status](https://ci.appveyor.com/api/projects/status/pv84v0v7106g5h0d?svg=true)](https://ci.appveyor.com/project/Tomicyo/shaderc)
 
 A collection of tools, libraries and tests for shader compilation.
 At the moment it includes:

@@ -32,11 +32,13 @@ if(SHADERC_ENABLE_NV_EXTENSIONS)
     add_definitions(-DNV_EXTENSIONS)
 endif(SHADERC_ENABLE_NV_EXTENSIONS)
 
-add_custom_target(check-copyright ALL
-  ${PYTHON_EXE} ${CMAKE_CURRENT_SOURCE_DIR}/utils/add_copyright.py
-  --check
-  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-  COMMENT "Check copyright")
+if(ENABLE_COPYRIGHT)
+	add_custom_target(check-copyright ALL
+	  ${PYTHON_EXE} ${CMAKE_CURRENT_SOURCE_DIR}/utils/add_copyright.py
+	  --check
+	  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+	  COMMENT "Check copyright")
+endif()
 
 add_custom_target(add-copyright
   ${PYTHON_EXE} ${CMAKE_CURRENT_SOURCE_DIR}/utils/add_copyright.py

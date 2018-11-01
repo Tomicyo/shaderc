@@ -1,0 +1,40 @@
+version: "{build}"
+
+os: Visual Studio 2017
+
+environment:
+  ANDROID_HOME: "C:\\android-sdk-windows"
+  ANDROID_NDK_HOME: "C:\\android-sdk-windows\\ndk-bundle"
+
+platform:
+  - x64
+
+configuration:
+  - android
+  - windows
+
+build:
+  parallel: true  # enable MSBuild parallel builds
+  verbosity: minimal
+
+install:
+  - ps: >-
+      If ($env:configuration -Match "android") {
+        appveyor DownloadFile https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-win.zip -FileName ninja.zip
+        7z x -y ninja.zip -o"C:\ninja"
+        appveyor DownloadFile https://dl.google.com/android/repository/sdk-tools-windows-3859397.zip
+        7z x -y sdk-tools-windows-3859397.zip -o"C:\android-sdk-windows"
+        mkdir C:\android-sdk-windows\licenses
+        Add-Content -Value "`n8933bad161af4178b1185d1a37fbf41ea5269c55`n`nd56f5187479451eabf01fb78af6dfcb131a6481e" -Path $env:ANDROID_HOME\licenses\android-sdk-license -Encoding ASCII
+        Add-Content -Value "`n84831b9409646a918e30573bab4c9c91346d8abd`n504667f4c0de7af1a06de9f4b1727b84351f2910" -Path $env:ANDROID_HOME\licenses\android-sdk-preview-license -Encoding ASCII
+        Add-Content -Value "`nd975f751698a77b662f1254ddbeed3901e976f5a" -Path $env:ANDROID_HOME\licenses\intel-android-extra-license -Encoding ASCII
+        &"$env:ANDROID_HOME\\tools\\bin\\sdkmanager.bat" ndk-bundle
+        &"$env:ANDROID_HOME\\tools\\bin\\sdkmanager.bat" cmake;3.6.4111459
+      }
+  - set PATH=C:\ninja;%PATH%
+
+build_script: 
+  - python ci.py
+
+artifacts:
+  - path: build/artifacts
